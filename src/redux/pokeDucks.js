@@ -11,14 +11,15 @@ export default function pokeReducer(state =dataInicial, action){
     switch (action.type) {
         case OBTENER_POKEMONES_EXITO:
         // Sending the list of pokemons to the State using the reducer
-            return {...state, action.payload}
-            break;
+            return {...state, array: action.payload}
     
         default:
             return state
     }
 }
 // actions
+// dispatch activates the reducer
+// getState obtains initial data
 export const obtenerPokemonesAccion = () => async (dispatch, getState) => {
     try {
         const res = await axios.get('https://pokeapi.co/api/v2/pokemon?offset=0&limit=20')
@@ -26,7 +27,18 @@ export const obtenerPokemonesAccion = () => async (dispatch, getState) => {
             type: OBTENER_POKEMONES_EXITO,
             payload: res.data.results
         })
-    )
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const siguienteSetAccion = () => async (dispatch, getState) => {
+    try {
+        const res = await axios.get('https://pokeapi.co/api/v2/pokemon?offset=0&limit=20')
+        dispatch({
+            type: OBTENER_POKEMONES_EXITO,
+            payload: res.data.results
+        })
     } catch (error) {
         console.log(error)
     }
