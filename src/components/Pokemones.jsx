@@ -14,25 +14,40 @@ const Pokemones = () => {
     const previous = useSelector(store => store.pokemones.previous)
     console.log(pokemones)
     return (
-        <div>
-            Lista de Pokemones
-            {
-                pokemones.length === 0 &&
-                <button onClick={()=> dispatch(obtenerPokemonesAccion())}>Get Pokemones</button>
-            }
-            {
-                previous &&
-                <button onClick={()=> dispatch(anteriorPokemonAccion())}>Anterior</button>
-            }
-            {   
-                next &&
-                <button onClick={()=> dispatch(siguientePokemonAccion())}>Siguiente</button>
-            }
-            <ul>
-                {
-                    pokemones.map(pokemon => <li key={pokemon.name}>{pokemon.name}</li>)
-                }
-            </ul>
+        <div className='row'>
+            <div className="col-md-6">
+                <h3>Lista de Pokemones</h3>
+                <br/>
+                <div className='d-flex justify-content-between'>
+                    {
+                        pokemones.length === 0 &&
+                        <button onClick={()=> dispatch(obtenerPokemonesAccion())} className='btn btn-dark'>Get Pokemones</button>
+                    }
+                    {
+                        previous &&
+                        <button onClick={()=> dispatch(anteriorPokemonAccion())} className='btn btn-dark'>Anterior</button>
+                    }
+                    {   
+                        next &&
+                        <button onClick={()=> dispatch(siguientePokemonAccion())} className='btn btn-dark'>Siguiente</button>
+                    }
+                </div>
+                <ul className='list-group mt-3'>
+                    {
+                        pokemones.map(pokemon => (
+                            <li
+                                key={pokemon.name}
+                                className='list-group-item text-uppercase'>
+                                {pokemon.name}
+                                <button className='btn btn-dark btn-sm float-end'>Info</button>
+                            </li>
+                            ))
+                    }
+                </ul>
+            </div>
+            <div className="col-md-6">
+                Detalle de un Pokemon
+            </div>
         </div>
     )
 }
