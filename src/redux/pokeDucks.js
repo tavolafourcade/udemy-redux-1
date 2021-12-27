@@ -118,7 +118,11 @@ export const anteriorPokemonAccion = () => async (dispatch, getState) => {
 }
 
 
-export const pokeDetalleAccion = (url) => async (dispatch) => {
+export const pokeDetalleAccion = (url = "https://pokeapi.co/api/v2/pokemon/1/") => async (dispatch) => {
+    // We can set a default URL (in case is undefined) in 2 ways: 
+    // if (url === undefined) {
+    //     url = "https://pokeapi.co/api/v2/pokemon/1/"
+    // }
     try {
         const res = await axios.get(url)
         console.log(res.data)
