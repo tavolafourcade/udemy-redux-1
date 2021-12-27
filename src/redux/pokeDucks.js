@@ -11,6 +11,7 @@ const dataInicial = {
 const OBTENER_POKEMONES_EXITO = 'OBTENER_POKEMONES_EXITO'
 const SIGUIENTE_POKEMONES_EXITO = 'SIGUIENTE_POKEMONES_EXITO'
 const ANTERIOR_POKEMONES_EXITO = 'ANTERIOR_POKEMONES_EXITO'
+const POKE_INFO_EXITO = 'POKE_INFO_EXITO'
 
 // reducer
 export default function pokeReducer(state =dataInicial, action){
@@ -23,6 +24,8 @@ export default function pokeReducer(state =dataInicial, action){
             return {...state, ...action.payload}
         case ANTERIOR_POKEMONES_EXITO:
             return {...state, ...action.payload}
+        case POKE_INFO_EXITO:
+            return {...state, detallePokemon: action.payload}
         default:
             return state
     }
@@ -108,6 +111,25 @@ export const anteriorPokemonAccion = () => async (dispatch, getState) => {
         dispatch({
             type: ANTERIOR_POKEMONES_EXITO,
             payload: res.data
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+export const pokeDetalleAccion = (url) => async (dispatch) => {
+    try {
+        const res = await axios.get(url)
+        console.log(res.data)
+        dispatch({
+            type: POKE_INFO_EXITO,
+            payload: {
+                nombre: res.data.name,
+                peso: res.data.weight,
+                alto: res.data.height,
+                foto: res.data.sprites.front_default
+            }
         })
     } catch (error) {
         console.log(error)

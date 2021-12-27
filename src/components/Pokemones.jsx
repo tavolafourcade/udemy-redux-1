@@ -4,7 +4,7 @@ import Detalle from './Detalle'
 //useDispatch: allows us to consume the action
 //useSelector: allows us to read the array of dataInicial
 import { useDispatch, useSelector } from 'react-redux'
-import { obtenerPokemonesAccion, siguientePokemonAccion, anteriorPokemonAccion } from '../redux/pokeDucks'
+import { obtenerPokemonesAccion, siguientePokemonAccion, anteriorPokemonAccion, pokeDetalleAccion } from '../redux/pokeDucks'
 
 const Pokemones = () => {
     const dispatch = useDispatch()
@@ -39,7 +39,10 @@ const Pokemones = () => {
                                 key={pokemon.name}
                                 className='list-group-item text-uppercase'>
                                 {pokemon.name}
-                                <button className='btn btn-dark btn-sm float-end'>Info</button>
+                                <button className='btn btn-dark btn-sm float-end' 
+                                        onClick={()=> dispatch(pokeDetalleAccion(pokemon.url))}>
+                                    Info
+                                </button>
                             </li>
                             ))
                     }
