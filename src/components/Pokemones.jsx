@@ -1,5 +1,5 @@
 import React from 'react'
-
+import Detalle from './Detalle'
 //hooks react redux
 //useDispatch: allows us to consume the action
 //useSelector: allows us to read the array of dataInicial
@@ -46,8 +46,10 @@ const Pokemones = () => {
                 </ul>
             </div>
             <div className="col-md-6">
-                Detalle de un Pokemon
+                <h3>Detalle Pokemon</h3>
+                <Detalle/>
             </div>
+            
         </div>
     )
 }
