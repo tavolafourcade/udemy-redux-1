@@ -1,15 +1,27 @@
-import React from 'react'
-
+import React, { useEffect } from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import { pokeDetalleAccion } from '../redux/pokeDucks'
 const Detalle = () => {
-    return (
-        <div className='card mt-4'>
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        const fetchData = () => {
+            dispatch(pokeDetalleAccion())
+        }
+        fetchData()
+    }, [dispatch])
+
+    const pokemon = useSelector(store => store.pokemones.detallePokemon)
+    console.log(pokemon)
+    return pokemon ? (
+        <div className='card mt-4 text-center'>
             <div className="card-body">
-                <img src="" className='img-fluid' alt='pokemon'/>
-                <div className="card-title">Nombre del pokemon</div>
-                <p className='card-text'>Alto </p>
+                <img src={pokemon.foto} className='img-fluid' alt='pokemon'/>
+                <div className="card-title text-uppercase">{pokemon.nombre}</div>
+                <p className='card-text'>Alto: {pokemon.alto} | Peso: {pokemon.peso}</p>
             </div>
         </div>
-    )
+    ) : null
 }
 
 export default Detalle
