@@ -123,6 +123,15 @@ export const pokeDetalleAccion = (url = "https://pokeapi.co/api/v2/pokemon/1/") 
     // if (url === undefined) {
     //     url = "https://pokeapi.co/api/v2/pokemon/1/"
     // }
+
+    if (localStorage.getItem(url)) {
+        dispatch({
+            type: OBTENER_POKEMONES_EXITO,
+            payload: JSON.parse(localStorage.getItem(url))
+        })
+        return
+    }
+
     try {
         const res = await axios.get(url)
         console.log(res.data)
@@ -135,6 +144,13 @@ export const pokeDetalleAccion = (url = "https://pokeapi.co/api/v2/pokemon/1/") 
                 foto: res.data.sprites.front_default
             }
         })
+        localStorage.setItem(url, JSON.stringify({
+            nombre: res.data.name,
+            peso: res.data.weight,
+            alto: res.data.height,
+            foto: res.data.sprites.front_default
+        }))
+
     } catch (error) {
         console.log(error)
     }
