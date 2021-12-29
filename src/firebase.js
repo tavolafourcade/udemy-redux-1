@@ -8,10 +8,10 @@ const firebaseConfig = {
     storageBucket: "crud-udemy-desde0-react.appspot.com",
     messagingSenderId: "952702242912",
     appId: "1:952702242912:web:b95a5a9605fd68d73f3305"
-  };
-  
-  // Initialize Firebase
-  const firebase = initializeApp(firebaseConfig);
-  const auth = firebase.auth()
+};
 
-  export {auth, firebase}
+  // Initialize Firebase
+const firebase = initializeApp(firebaseConfig);
+const auth = firebase.auth()
+
+export {auth, firebase}
