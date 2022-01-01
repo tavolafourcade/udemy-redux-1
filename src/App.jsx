@@ -1,3 +1,4 @@
+import React from 'react'
 import Pokemones from "./components/Pokemones"
 import Login from "./components/Login"
 import NavBar from "./components/NavBar";
