@@ -40,11 +40,11 @@ export const obtenerPokemonesAccion = () => async (dispatch, getState) => {
     //const { offset } = getState().pokemones
     if (localStorage.getItem('offset=0')) {
         console.log('Datos guardados de la API')
-        console.log('datos guardados')
         dispatch({
             type: OBTENER_POKEMONES_EXITO,
             payload: JSON.parse(localStorage.getItem('offset=0'))
         })
+        console.log('PAYALOAD', JSON.parse(localStorage.getItem('offset=0')))
         return
     }
 
@@ -118,7 +118,7 @@ export const anteriorPokemonAccion = () => async (dispatch, getState) => {
 }
 
 
-export const pokeDetalleAccion = (url = "https://pokeapi.co/api/v2/pokemon/1/") => async (dispatch) => {
+export const pokeDetalleAccion = (url = 'https://pokeapi.co/api/v2/pokemon/1/') => async (dispatch) => {
     // We can set a default URL (in case is undefined) in 2 ways: 
     // if (url === undefined) {
     //     url = "https://pokeapi.co/api/v2/pokemon/1/"
@@ -126,7 +126,7 @@ export const pokeDetalleAccion = (url = "https://pokeapi.co/api/v2/pokemon/1/") 
 
     if (localStorage.getItem(url)) {
         dispatch({
-            type: OBTENER_POKEMONES_EXITO,
+            type: POKE_INFO_EXITO,
             payload: JSON.parse(localStorage.getItem(url))
         })
         return
@@ -134,7 +134,7 @@ export const pokeDetalleAccion = (url = "https://pokeapi.co/api/v2/pokemon/1/") 
 
     try {
         const res = await axios.get(url)
-        console.log(res.data)
+        console.log('RES.DATA FROM POKEDETALLEACCION',res.data)
         dispatch({
             type: POKE_INFO_EXITO,
             payload: {
