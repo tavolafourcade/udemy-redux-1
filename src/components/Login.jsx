@@ -1,10 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ingresoUsuarioAccion } from '../redux/usuarioDucks'
+import {withRouter} from 'react-router-dom'
 
-const Login = () => {
+const Login = (props) => {
     const dispatch = useDispatch()
     const loading = useSelector(store => store.usuario.loading)
+    const activo = useSelector(store => store.usuario.activo)
+
+    useEffect(() => {
+        console.log('activo?', activo)
+        activo && props.history.push('/')
+    }, [activo, props.history])
     return (
         <div className='mt-5 text-center'>
             <h3>Ingreso con Google</h3>
@@ -19,4 +26,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default withRouter(Login)
