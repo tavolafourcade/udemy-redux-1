@@ -12,7 +12,7 @@ const Pokemones = () => {
     const pokemones = useSelector(store => store.pokemones.results)
     const next = useSelector(store => store.pokemones.next)
     const previous = useSelector(store => store.pokemones.previous)
-    console.log(pokemones)
+    console.log('POKEMONES',pokemones)
     return (
         <div className='row'>
             <div className="col-md-6">
