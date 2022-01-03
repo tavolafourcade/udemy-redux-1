@@ -12,27 +12,12 @@ const Pokemones = () => {
     const pokemones = useSelector(store => store.pokemones.results)
     const next = useSelector(store => store.pokemones.next)
     const previous = useSelector(store => store.pokemones.previous)
-    console.log(pokemones)
+    console.log('POKEMONES',pokemones)
     return (
-        <div className='row'>
+        <div className='row mt-5'>
             <div className="col-md-6">
                 <h3>Lista de Pokemones</h3>
-                <br/>
-                <div className='d-flex justify-content-between'>
-                    {
-                        pokemones.length === 0 &&
-                        <button onClick={()=> dispatch(obtenerPokemonesAccion())} className='btn btn-dark'>Get Pokemones</button>
-                    }
-                    {
-                        previous &&
-                        <button onClick={()=> dispatch(anteriorPokemonAccion())} className='btn btn-dark'>Anterior</button>
-                    }
-                    {   
-                        next &&
-                        <button onClick={()=> dispatch(siguientePokemonAccion())} className='btn btn-dark'>Siguiente</button>
-                    }
-                </div>
-                <ul className='list-group mt-3'>
+                <ul className='list-group mt-4'>
                     {
                         pokemones.map(pokemon => (
                             <li
@@ -47,6 +32,20 @@ const Pokemones = () => {
                             ))
                     }
                 </ul>
+                <div className='d-flex justify-content-between mt-4 mb-5'>
+                    {
+                        pokemones.length === 0 &&
+                        <button onClick={()=> dispatch(obtenerPokemonesAccion())} className='btn btn-dark'>Get Pokemones</button>
+                    }
+                    {
+                        previous &&
+                        <button onClick={()=> dispatch(anteriorPokemonAccion())} className='btn btn-dark'>Anterior</button>
+                    }
+                    {   
+                        next &&
+                        <button onClick={()=> dispatch(siguientePokemonAccion())} className='btn btn-dark'>Siguiente</button>
+                    }
+                </div>
             </div>
             <div className="col-md-6">
                 <h3>Detalle Pokemon</h3>

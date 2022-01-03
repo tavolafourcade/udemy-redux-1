@@ -12,7 +12,7 @@ const Detalle = () => {
     }, [dispatch])
 
     const pokemon = useSelector(store => store.pokemones.detallePokemon)
-    console.log(pokemon)
+    console.log('POKEMON DE detalle.jsx',pokemon)
     return pokemon ? (
         <div className='card mt-4 text-center'>
             <div className="card-body">
