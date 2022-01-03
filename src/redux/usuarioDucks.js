@@ -54,3 +54,14 @@ export const ingresoUsuarioAccion = () => async(dispatch) => {
         })
     }
 }
+
+//When we refresh the site we want our user to be active
+//The user should be deleted when the session is closed
+export const leerUsuarioActivoAccion = () => (dispatch) => {
+    if(localStorage.getItem('usuario')){
+        dispatch({
+            type: USUARIO_EXITO,
+            payload: JSON.parse(localStorage.getItem('usuario'))
+        })
+    }
+}
