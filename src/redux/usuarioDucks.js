@@ -97,3 +97,33 @@ export const cerrarSesionAccion = () => (dispatch) => {
         type: CERRAR_SESION
     })
 }
+
+// Function that allows us to edit user's name
+// It's async because is a request to DB
+export const actualizarUsuarioAccion = (nombreActualizado) => async (dispatch, getState) => {
+    dispatch({
+        type: LOADING
+    })
+    const {user} = getState().usuario
+    try{
+        //We're going to update both Firebase and localStorage names
+        //Updating email Firebase collection
+        await db.collection('usuarios').doc(user.email).update({
+            displayName: nombreActualizado
+        })
+
+        //Updating localStorage
+        const usuario = {
+            ...user,
+            displayName: nombreActualizado
+        }
+
+        dispatch({
+            type: USUARIO_EXITO,
+            payload: usuario
+        })
+        localStorage.setItem('usuario', JSON.stringify(usuario))
+    } catch(error) {
+        console.log(error)
+    }
+} 

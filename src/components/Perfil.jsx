@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { actualizarUsuarioAccion } from '../redux/usuarioDucks'
 
 const Perfil = () => {
     const usuario = useSelector(store => store.usuario.user)
@@ -7,11 +8,13 @@ const Perfil = () => {
     const [nombreUsuario, setNombreUsuario] = useState(usuario.displayName)
     const [activarFormulario, setActivarFormulario] = useState(false)
 
+    const dispatch = useDispatch()
+    const actualizarUsuario = () => {
+        dispatch(actualizarUsuarioAccion('Octaviood'))
+    }
+
     console.log('Usuario using useSelector', usuario)
 
-    const actualizarUsuario = () => {
-
-    }
     return (
         <div className='mt-5 text-center'>
             <div className='card'>
