@@ -1,4 +1,4 @@
-import { auth, firebase } from '../firebase'
+import { auth, firebase, db } from '../firebase'
 // data inicial
 const dataInicial = {
     loading: false,
@@ -28,6 +28,9 @@ export default function usuarioReducer (state = dataInicial, action){
 
 // action
 // async porque es una solicitud a BD
+// Hacemos el dispatch con loading, 
+// Luego logueamos al usuario con Google,
+// Luego hacemos un dispatch de la respuesta del usuario obteniendo su uid y email.
 export const ingresoUsuarioAccion = () => async(dispatch) => {
     dispatch({
         type: LOADING,
@@ -38,18 +41,34 @@ export const ingresoUsuarioAccion = () => async(dispatch) => {
         const provider = new firebase.auth.GoogleAuthProvider()
         const res = await auth.signInWithPopup(provider)
         console.log('INGRESO USUARIO ACCION ', res)
+        console.log('RES.USER', res.user)
 
+        const usuario = {
+            uid: res.user.uid,
+            email: res.user.email,
+            displayName: res.user.displayName,
+            photoURL: res.user.photoURL
+        }
+
+        // Vamos a guardar al usuario nuevo en la BD
+        const usuarioDB = await db.collection('usuarios').doc(usuario.email).get()
+        if(usuarioDB.exists){
+            // When user exists in Firestore we don't need to store it, se send the usuarioDB with its data
+            dispatch({
+                type: USUARIO_EXITO,
+                payload: usuarioDB.data()
+            })
+            localStorage.setItem('usuario', JSON.stringify(usuarioDB.data()))
+        }else{
+            // When user doesn't exist in Firestore
+            await db.collection('usuarios').doc(usuario.email).set(usuario)
+        }
         dispatch({
             type: USUARIO_EXITO,
-            payload: {
-                uid: res.user.uid,
-                email: res.user.email
-            }
+            payload: usuario
         })
-        localStorage.setItem('usuario', JSON.stringify({
-            uid: res.user.uid,
-            email: res.user.email
-        }))
+        // Guardamos al usuario con lo que viene directamente desde Google.
+        localStorage.setItem('usuario', JSON.stringify(usuario))
 
     } catch(errror){
         dispatch({
