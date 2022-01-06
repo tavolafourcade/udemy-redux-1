@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
+import {BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+import { auth } from './firebase';
 import Pokemones from "./components/Pokemones"
 import Login from "./components/Login"
 import NavBar from "./components/NavBar";
+import Perfil from './components/Perfil';
 
-import {BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
-import { auth } from './firebase';
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
     fetchUser()
   },[])
 
+  // Function that allows the user to access private content. Otherwise redirects him to login
   const RutaProtegida = ({component, path, ...rest}) => {
     if(localStorage.getItem('usuario')){
       const usuarioStorage = JSON.parse(localStorage.getItem('usuario'))
@@ -43,6 +45,7 @@ function App() {
           <NavBar/>
           <Switch>
             <RutaProtegida component={Pokemones} path='/' exact/>
+            <RutaProtegida component={Perfil} path='/perfil' exact/>
             <Route component={Login} path='/login' exact/>
           </Switch>
         </div>
