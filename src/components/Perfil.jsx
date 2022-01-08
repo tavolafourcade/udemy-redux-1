@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { actualizarUsuarioAccion } from '../redux/usuarioDucks'
+import { actualizarUsuarioAccion, editarFotoAccion } from '../redux/usuarioDucks'
 
 const Perfil = () => {
     const usuario = useSelector(store => store.usuario.user)
@@ -21,6 +21,22 @@ const Perfil = () => {
         setActivarFormulario(false)
     }
 
+        const [errorImage, setErrorImage] = useState(false)
+    const seleccionarArchivo = imagen => {
+        console.log('imagen', imagen.target.files[0])
+        const imagenCliente = imagen.target.files[0]
+
+        if (imagenCliente === undefined){
+            console.log('No se seleccionó imagen')
+            return
+        }
+        if(imagenCliente.type === 'image/png' || imagenCliente.type === 'image/jpg' || imagenCliente.type === 'image/jpeg'){
+            dispatch(editarFotoAccion(imagenCliente))
+            setErrorImage(false)
+        } else {
+            setErrorImage(true)
+        }
+    }
     console.log('Usuario using useSelector', usuario)
 
     return (
@@ -33,6 +49,26 @@ const Perfil = () => {
                     <button className='btn btn-dark' onClick={()=>setActivarFormulario(true)}>
                         Editar nombre
                     </button>
+                    {
+                        errorImage && 
+                        <div className="alert alert-warning mt-4">
+                            Solo archivos .PNG o .JPG
+                        </div>
+                    }
+                    <div className="custom-file">
+                        <input 
+                            type="file" 
+                            className='custom-file-input' 
+                            id='inputGroupFile01'
+                            style={{display: 'none'}}
+                            onChange={e => seleccionarArchivo(e)}
+                            disabled={loading} />
+                        <label 
+                            className={loading ? 'btn btn-dark mt-2 disabled' : 'btn btn-dark mt-2'}
+                            htmlFor='inputGroupFile01'>
+                                Actualizar Imagen
+                        </label>
+                    </div>
                 </div>
                 {
                     loading && 
